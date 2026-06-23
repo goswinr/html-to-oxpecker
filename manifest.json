@@ -10,12 +10,12 @@
     "dynamicImports": [
       "src/routes/index.tsx"
     ],
-    "file": "assets/entry-client-837e061b.js",
+    "file": "assets/entry-client-196271b8.js",
     "isEntry": true,
     "src": "src/entry-client.tsx"
   },
   "src/routes/index.tsx": {
-    "file": "assets/index-625d4a07.js",
+    "file": "assets/index-f3016a9a.js",
     "imports": [
       "src/entry-client.tsx"
     ],
