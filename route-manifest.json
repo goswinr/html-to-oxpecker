@@ -1,0 +1,44 @@
+{
+  "/": {
+    "type": "route",
+    "script": {
+      "type": "script",
+      "href": "/html-to-oxpecker/assets/index-dfddfa84.js"
+    },
+    "assets": [
+      {
+        "type": "script",
+        "href": "/html-to-oxpecker/assets/index-dfddfa84.js"
+      },
+      {
+        "type": "script",
+        "href": "/html-to-oxpecker/assets/entry-client-a82ef692.js"
+      },
+      {
+        "type": "style",
+        "href": "/html-to-oxpecker/assets/entry-client-7925a276.css"
+      }
+    ]
+  },
+  "entry-client": {
+    "type": "entry",
+    "script": {
+      "type": "script",
+      "href": "/html-to-oxpecker/assets/entry-client-a82ef692.js"
+    },
+    "assets": [
+      {
+        "type": "script",
+        "href": "/html-to-oxpecker/assets/entry-client-a82ef692.js"
+      },
+      {
+        "type": "style",
+        "href": "/html-to-oxpecker/assets/entry-client-7925a276.css"
+      }
+    ]
+  },
+  "index.html": {
+    "type": "entry",
+    "assets": []
+  }
+}
