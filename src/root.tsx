@@ -39,16 +39,20 @@ export default function Root() {
           name="og:description"
           content="Convert your HTML to F# Oxpecker.Solid markup and SolidJS JSX"
         />
+        {/* Social share image disabled until an Oxpecker og.png exists.
         <Meta name="og:image:width" content="1200" />
         <Meta name="og:image:height" content="630" />
         <Meta name="og:image" content={`${url}/og.png`} />
         <Meta name="og:image:url" content={`${url}/og.png`} />
         <Meta name="og:image:secure_url" content={`${url}/og.png`} />
         <Meta name="og:image:alt" content="" />
+        */}
         <Meta name="twitter:title" content="HTML To Oxpecker" />
-        <Meta name="twitter:card" content="summary_large_image" />
+        <Meta name="twitter:card" content="summary" />
+        {/* Social share image disabled until an Oxpecker og.png exists.
         <Meta name="twitter:image" content={`${url}/og.png`} />
         <Meta name="twitter:image:alt" content="" />
+        */}
         <Meta
           name="twitter:description"
           content="Convert your HTML to F# Oxpecker.Solid markup and SolidJS JSX"
