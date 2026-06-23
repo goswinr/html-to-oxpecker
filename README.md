@@ -6,6 +6,9 @@
 
 This is the source code of the [HTML to Oxpecker](https://GoswinR.github.io/html-to-oxpecker) website — a browser tool that converts HTML to F# [Oxpecker.Solid](https://github.com/Lanayx/Oxpecker) markup and SolidJS JSX.
 
+> **This is a port of [solidjs-community/html-to-solidjsx](https://github.com/solidjs-community/html-to-solidjsx), adapted for [Oxpecker](https://github.com/Lanayx/Oxpecker).**
+> It keeps the original HTML → SolidJS JSX converter and adds a third pane that converts the same HTML into F# Oxpecker.Solid markup. All credit for the original tool goes to the SolidJS community.
+
 ## Purpose
 
 Existing HTML to JSX online transformers aren't compatible for SolidJS, it transforms to JSX that is suited for React templates.
