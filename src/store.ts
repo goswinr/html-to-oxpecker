@@ -2,12 +2,23 @@ import { createStore } from "solid-js/store";
 import { isServer } from "solid-js/web";
 import { HTMLtoJSXConfig } from "./lib/html-to-jsx";
 export type TJSXConfig = HTMLtoJSXConfig & { prefixSVGIds?: string };
+
+export type PaneKey = "html" | "jsx" | "oxpecker";
+export const PANE_KEYS: PaneKey[] = ["html", "jsx", "oxpecker"];
+export type Panes = Record<PaneKey, boolean>;
+export type PaneSizes = Record<PaneKey, number>;
+
 type TStore = {
   config: TJSXConfig;
   htmlText: string;
   jsxText: string;
   oxpeckerText: string;
-  layout: "columns" | "rows" | "jsx" | "html" | "oxpecker";
+  /** How the visible editor panes are arranged. */
+  orientation: "columns" | "rows";
+  /** Which editor panes are shown. */
+  panes: Panes;
+  /** Flex-grow weight of each pane, adjusted by the resizers. */
+  paneSizes: PaneSizes;
   lineWrap: boolean;
 };
 export const defaultConfig: TJSXConfig = {
@@ -32,7 +43,10 @@ export const [store, setStore] = createStore<TStore>({
   htmlText: getHTMLText().trimStart(),
   jsxText: getJSXText().trimStart(),
   oxpeckerText: getOxpeckerText().trimStart(),
-  layout: "rows",
+  orientation: "columns",
+  // JSX is hidden by default — this is primarily an HTML -> Oxpecker tool.
+  panes: { html: true, jsx: false, oxpecker: true },
+  paneSizes: { html: 1, jsx: 1, oxpecker: 1 },
   lineWrap: true,
 });
 

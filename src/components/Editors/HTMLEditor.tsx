@@ -96,7 +96,9 @@ const HTMLEditor = () => {
         <button
           class="flex justify-center items-center h-full w-45px md:mr-0 hover:(text-#000 dark:text-light) transition"
           classList={{
-            "mr-12px": store.layout === "rows" || store.layout === "html",
+            "mr-12px":
+              store.orientation === "rows" ||
+              (store.panes.html && !store.panes.jsx && !store.panes.oxpecker),
           }}
           onClick={onClear}
           aria-label="Clear HTML textbox"

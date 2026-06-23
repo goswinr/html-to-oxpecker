@@ -120,6 +120,9 @@ const JSXEditor = () => {
 
   onMount(() => {
     htmlToJSXConverter = new HTMLtoJSX(store.config);
+    // Refresh from the current HTML — the pane may have been hidden (and so not
+    // updated by the effects below) while the input changed.
+    updateEditorText();
 
     setTimeout(() => {
       const { scrollDOM } = editorView();

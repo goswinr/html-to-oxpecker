@@ -3,7 +3,8 @@ import Dismiss from "solid-dismiss";
 import { useFloating } from "solid-floating-ui";
 import { createMemo, createSignal, For, JSX, ParentComponent } from "solid-js";
 import { Dynamic } from "solid-js/web";
-import { setStore, store } from "../../store";
+import { produce } from "solid-js/store";
+import { PANE_KEYS, setStore, store } from "../../store";
 import CopyJSXButton from "../CopyJSXButton";
 import SplitPanelColumns from "../Icons/SplitPanelColumns";
 import SplitPanelRows from "../Icons/SplitPanelRows";
@@ -52,9 +53,39 @@ const ActionsPanel = () => {
     middleware: [offset(4), flip(), shift()],
   });
 
+  // Map a selector entry onto the orientation/visibility model.
+  const applyLayout = (id: string) => {
+    setStore(
+      produce((s) => {
+        switch (id) {
+          case "rows":
+          case "columns":
+            s.orientation = id;
+            s.panes = { html: true, jsx: true, oxpecker: true };
+            break;
+          case "html":
+            s.panes = { html: true, jsx: false, oxpecker: false };
+            break;
+          case "jsx":
+            s.panes = { html: false, jsx: true, oxpecker: false };
+            break;
+          case "oxpecker":
+            s.panes = { html: false, jsx: false, oxpecker: true };
+            break;
+        }
+      }),
+    );
+  };
+
+  // Derive which entry is "active": a single visible pane maps to that pane,
+  // otherwise the current orientation.
+  const currentLayout = () => {
+    const visible = PANE_KEYS.filter((p) => store.panes[p]);
+    return visible.length === 1 ? visible[0] : store.orientation;
+  };
+
   const selectedItemFromList = createMemo(() => {
-    const item = list.find(({ id }) => id === store.layout);
-    return item;
+    return list.find(({ id }) => id === currentLayout());
   });
 
   return (
@@ -106,22 +137,22 @@ const ActionsPanel = () => {
                   <li
                     class="text-18px px-10px py-3px  text-#333 cursor-pointer hover:(bg-black/05 transition) focus:(bg-black/20 text-black) hover:focus:(bg-black/25) dark:(text-#eee hover:(bg-black/20) focus:(text-white bg-black/50)) dark:hover:focus:(bg-black/75)"
                     tabindex={0}
-                    data-selected={id === store.layout}
+                    data-selected={id === currentLayout()}
                     onClick={() => {
                       setOpen(false);
-                      setStore("layout", id as "jsx");
+                      applyLayout(id);
                     }}
                     onKeyDown={(e) => {
                       if (e.key !== "Enter") return;
                       setOpen(false);
-                      setStore("layout", id as "jsx");
+                      applyLayout(id);
                     }}
                   >
                     <div
                       class="flex items-center gap-2 py-6px"
                       classList={{
                         "bg-black/60 text-light [&_[data-icon-text]]:text-#000 dark:(bg-white/80 text-#000 [&_[data-icon-text]]:text-white) rounded-8px pl-6px -ml-6px !py-5px my-1px !py-5px my-1px":
-                          id === store.layout,
+                          id === currentLayout(),
                       }}
                     >
                       <div class="h-35px w-35px text-10px">{Icon && <Icon />}</div>
