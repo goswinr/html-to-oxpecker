@@ -18,6 +18,11 @@ const TogglePanelButton = () => {
   const navPadding = 12;
 
   const queryEls = () => {
+    // The editor panes (and the JSX copy button) can be toggled off, so their
+    // elements may be absent. Those are only ever written to via .style (never
+    // measured), so fall back to a throwaway element to keep the animation a
+    // harmless no-op instead of crashing on null.
+    const fallback = document.createElement("div");
     const headerFakeBgEl = document.getElementById("header-fake-bg")!;
     const splitEditorEl = document.getElementById("split-editor")!;
     const settingsPanelEl = document.getElementById("settings-panel")!;
@@ -26,9 +31,9 @@ const TogglePanelButton = () => {
     const mainEl = document.getElementById("main")!;
     const header = document.getElementById("header")!;
     const headerNavEl = document.getElementById("header-nav")!;
-    const copyJSXContainerEl = document.getElementById("copy-jsx-container")!;
-    const htmlEditorContainer = document.getElementById("html-editor-container")!;
-    const jsxEditorContainer = document.getElementById("jsx-editor-container")!;
+    const copyJSXContainerEl = document.getElementById("copy-jsx-container") ?? fallback;
+    const htmlEditorContainer = document.getElementById("html-editor-container") ?? fallback;
+    const jsxEditorContainer = document.getElementById("jsx-editor-container") ?? fallback;
 
     return {
       headerFakeBgEl,
