@@ -3,20 +3,20 @@
     "type": "route",
     "script": {
       "type": "script",
-      "href": "/html-to-oxpecker/assets/index-f3016a9a.js"
+      "href": "/html-to-oxpecker/assets/index-289472e7.js"
     },
     "assets": [
       {
         "type": "script",
-        "href": "/html-to-oxpecker/assets/index-f3016a9a.js"
+        "href": "/html-to-oxpecker/assets/index-289472e7.js"
       },
       {
         "type": "script",
-        "href": "/html-to-oxpecker/assets/entry-client-196271b8.js"
+        "href": "/html-to-oxpecker/assets/entry-client-5cdee5d4.js"
       },
       {
         "type": "style",
-        "href": "/html-to-oxpecker/assets/entry-client-2ff2e5b6.css"
+        "href": "/html-to-oxpecker/assets/entry-client-4415a51f.css"
       }
     ]
   },
@@ -24,16 +24,16 @@
     "type": "entry",
     "script": {
       "type": "script",
-      "href": "/html-to-oxpecker/assets/entry-client-196271b8.js"
+      "href": "/html-to-oxpecker/assets/entry-client-5cdee5d4.js"
     },
     "assets": [
       {
         "type": "script",
-        "href": "/html-to-oxpecker/assets/entry-client-196271b8.js"
+        "href": "/html-to-oxpecker/assets/entry-client-5cdee5d4.js"
       },
       {
         "type": "style",
-        "href": "/html-to-oxpecker/assets/entry-client-2ff2e5b6.css"
+        "href": "/html-to-oxpecker/assets/entry-client-4415a51f.css"
       }
     ]
   },
