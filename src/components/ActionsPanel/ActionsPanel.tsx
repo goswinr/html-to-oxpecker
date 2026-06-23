@@ -17,12 +17,12 @@ const ActionsPanel = () => {
   }[] = [
     {
       id: "rows",
-      text: "HTML and JSX rows",
+      text: "Editors as rows",
       Icon: SplitPanelRows,
     },
     {
       id: "columns",
-      text: "HTML and JSX columns",
+      text: "Editors as columns",
       Icon: SplitPanelColumns,
     },
     {
@@ -34,6 +34,11 @@ const ActionsPanel = () => {
       id: "jsx",
       text: "JSX only",
       Icon: () => <IconText>JSX</IconText>,
+    },
+    {
+      id: "oxpecker",
+      text: "F# Oxpecker only",
+      Icon: () => <IconText>F#</IconText>,
     },
   ];
 

@@ -1,0 +1,36 @@
+name: Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  fsharp-compile:
+    name: Oxpecker F# compile test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v2.2.4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: pnpm
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Install dependencies
+        run: pnpm install
+
+      # Verifies the HTML -> F# Oxpecker.Solid converter output type-checks
+      # against the real Oxpecker.Solid NuGet package via Fable.
+      - name: Run F# compile test
+        run: pnpm test:fsharp

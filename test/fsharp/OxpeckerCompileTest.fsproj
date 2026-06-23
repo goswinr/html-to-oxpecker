@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Fable-only project used by the compile test (../run.mjs). It is transpiled
+    with `dotnet fable`, never built with `dotnet build`, so no entry point is
+    needed. Generated.fs is produced from the converter output at test time and
+    is git-ignored.
+  -->
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <DisableImplicitFSharpCoreReference>false</DisableImplicitFSharpCoreReference>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="Generated.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Oxpecker.Solid" Version="1.0.0" />
+  </ItemGroup>
+
+</Project>

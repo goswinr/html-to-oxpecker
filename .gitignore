@@ -110,3 +110,13 @@ dist
 
 # TernJS port file
 .tern-port
+
+# Claude Code local settings
+.claude/settings.local.json
+
+# F# compile test (test/fsharp) — generated/build artifacts
+test/fsharp/Generated.fs
+test/fsharp/.converter.mjs
+test/fsharp/out/
+**/obj/
+**/bin/

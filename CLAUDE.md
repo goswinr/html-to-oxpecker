@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project
 
-A browser-based tool that converts HTML into SolidJS-compatible JSX (live at `solidjs-community.github.io/html-to-solidjsx`). Unlike React-oriented HTML→JSX converters, it keeps attributes close to HTML standards (`class`/`for` are not renamed) and offers Solid-specific options. Note: the repo folder is `html-to-oxpecker` but the package/app is still `html-to-solidjsx`.
+A browser-based tool (`html-to-oxpecker`, deployed at `GoswinR.github.io/html-to-oxpecker`) that converts HTML into both F# [Oxpecker.Solid](https://lanayx.github.io/Oxpecker/src/Oxpecker.Solid/) markup and SolidJS-compatible JSX, shown in side-by-side editor panes. Unlike React-oriented HTML→JSX converters, the JSX output keeps attributes close to HTML standards (`class`/`for` are not renamed) and offers Solid-specific options. History: this was forked from `solidjs-community/html-to-solidjsx` (the JSX converter) and the F# Oxpecker output was added; some banner/asset references still point at the original solidjs assets.
 
 ## Commands
 
@@ -14,14 +14,19 @@ Uses **pnpm** (required; see `engines`) and SolidStart (the legacy Vite-based `s
 - `pnpm build` — static build to `dist/public` (adapter `solid-start-static`)
 - `pnpm start` — preview the production build
 
-There is no test suite, linter, or typecheck script. Prettier config lives in `.prettierrc` (100 col, 2-space, semicolons, double quotes, trailing commas). CI (`.github/workflows/main.yaml`) only runs `pnpm build` and deploys `dist/public` to the `gh-pages` branch on push to `main`.
+- `pnpm test` / `pnpm test:fsharp` — compile-test the Oxpecker converter output (see below; needs the .NET SDK)
+
+There is no linter or typecheck script. Prettier config lives in `.prettierrc` (100 col, 2-space, semicolons, double quotes, trailing commas). CI: `.github/workflows/main.yaml` runs `pnpm build` and deploys `dist/public` to `gh-pages` on push to `main`; `.github/workflows/test.yaml` runs the F# compile test on push/PR.
+
+### Testing (`test/fsharp/`)
+The one test is a Fable-based compile check that proves the Oxpecker output actually type-checks against the real `Oxpecker.Solid` NuGet package. `test/fsharp/run.mjs` runs the converter (via a linkedom DOM) over `test/fsharp/fixtures/*.html`, writes them as `[<SolidComponent>]` functions into `Generated.fs` (git-ignored), and compiles with Fable. Add a fixture `.html` to extend coverage; prefer inputs exercising tricky attribute typing. If you change attribute handling in the converter, run this — it's the only thing that catches Oxpecker type errors. See `test/fsharp/README.md`.
 
 Path alias: `~/*` → `src/*` (see `tsconfig.json`).
 
 ## Architecture
 
 ### Central store (`src/store.ts`)
-A single Solid `createStore` (`store` / `setStore`) is the source of truth shared across all components: `config` (the converter options + `prefixSVGIds`), `htmlText`, `jsxText`, `layout`, `lineWrap`. Components read/write this store directly rather than passing props. `config` is persisted to `localStorage.config`; the initial HTML/JSX demo content is hardcoded here.
+A single Solid `createStore` (`store` / `setStore`) is the source of truth shared across all components: `config` (the converter options + `prefixSVGIds`), `htmlText`, `jsxText`, `oxpeckerText`, `layout`, `lineWrap`. Components read/write this store directly rather than passing props. `config` is persisted to `localStorage.config`; the initial HTML/JSX/Oxpecker demo content is hardcoded here (keep the three in sync if you change them).
 
 ### Conversion engine (`src/lib/html-to-jsx.ts`)
 The core converter is the `HTMLtoJSX` class — a heavily modified fork of react-magic's `htmltojsx`, adapted for Solid JSX. Key facts:
@@ -29,13 +34,25 @@ The core converter is the `HTMLtoJSX` class — a heavily modified fork of react
 - `HTMLtoJSXConfig` (exported) defines every option; defaults are applied in the constructor. `StyleParser` (same file) handles inline `style` attributes (css-object vs css-string).
 - Special handling lives here: void/self-closing detection, `<style>`/`<textarea>`/`<pre>` quirks, SVG tag-name camelCasing (`ELEMENT_TAG_NAME_MAPPING`), attribute mapping/camelCasing (`ATTRIBUTE_MAPPING`), comment conversion, and component/wrapper-node scaffolding.
 
-### Wiring (`src/components/Editors/JSXEditor.tsx`)
-This component owns the conversion lifecycle. It holds a `HTMLtoJSX` instance and re-runs `convert()` via `createEffect` whenever `store.htmlText` or `store.config` changes. Two post-processing steps run **after** `convert()` and are NOT part of the converter class:
-- `namespaceSVGId()` — implements the store-only `prefixSVGIds` option (prefixes SVG `id`/`url(#…)`/`xlink:href` references). `prefixSVGIds` is intentionally outside `HTMLtoJSXConfig`.
+### Second converter: F# Oxpecker (`src/lib/html-to-oxpecker.ts`)
+`HTMLtoOxpecker` is an independent, self-contained converter (same browser-only DOM-walking approach as `HTMLtoJSX`, but a cleaner recursive line-emitter) that outputs F# [Oxpecker.Solid](https://lanayx.github.io/Oxpecker/src/Oxpecker.Solid/) DSL. Attribute handling mirrors Oxpecker's typed property setters so output is both idiomatic and type-checks:
+- **String** attrs → named args (`class'="x"`), but only when the name is in the `OXPECKER_STRING_ATTRS` allowlist (`src/lib/oxpecker-string-attrs.ts`); otherwise the property-initializer wouldn't compile (e.g. `blockquote` has no `cite`) and it falls back to `.attr(...)`. Known hyphenated SVG attrs use backtick-quoting (`` ``stop-color``="..." ``).
+- **int** attrs (`tabindex`, `colspan`, `rows`, ...) → named int (`tabindex=2`) when integral, else `.attr`.
+- **bool** attrs (`disabled`, `required`, ...) → named bool (`disabled=true`); bare non-bool attrs use `.bool(name, true)`.
+- **`width`/`height`** are `int` on HTML elements but `string` on SVG ones, so the converter tracks an `#inSvg` flag: `width="50"` inside `<svg>`, `width=640` on `<img>`.
+- **char** (`accesskey`) and anything unmodeled (`data-*`, hyphenated `aria-*`, `xlink:href`) → the generic, always-string-safe `.attr(...)`.
+
+The `INT_ATTRS`/`BOOL_ATTRS`/`CHAR_ATTRS` sets and the string allowlist are all extracted from the Oxpecker.Solid bindings. Reserved-word **tag** names get an apostrophe too (the SVG `<use>` element is `use'`). SVG tags are camelCased; inline `style` is a string; `<style>` content is a triple-quoted string. Consumes only the `store.config` subset that maps cleanly (indent, wrapperNode, component, componentName, stripStyleTag, stripComment) via `mapConfig()` in `OxpeckerEditor.tsx`. **Note:** generated SVG markup requires `open Oxpecker.Solid.Svg` (that module is not `[<AutoOpen>]`, unlike `Tags`). Output verified to compile against Oxpecker.Solid 1.0.0 by `test/fsharp` (Fable).
+
+### Wiring (`src/components/Editors/JSXEditor.tsx`, `OxpeckerEditor.tsx`)
+Each output editor owns its own conversion lifecycle: it holds a converter instance and re-runs `convert()` via `createEffect` whenever `store.htmlText` or `store.config` changes, writing to `store.jsxText` / `store.oxpeckerText`. `JSXEditor` has two post-processing steps that run **after** `convert()` and are NOT part of the converter class:
+- `namespaceSVGId()` — implements the store-only `prefixSVGIds` option (prefixes SVG `id`/`url(#…)`/`xlink:href` references). `prefixSVGIds` is intentionally outside `HTMLtoJSXConfig`. (Not yet applied to Oxpecker output.)
 - `insertHiddenFragments()` — wraps output in a `<>…</>` that is hidden via CSS so CodeMirror's JSX highlighter stays valid when there's no real wrapper node.
 
+`SplitEditor.tsx` lays the three editors out with flexbox; `store.layout` (`columns`/`rows`/`html`/`jsx`/`oxpecker`) toggles per-pane visibility. F# highlighting uses `@codemirror/legacy-modes/mode/mllike` (`fSharp`) via `StreamLanguage`.
+
 ### Editors & UI
-Both editors are CodeMirror 6 instances via `solid-codemirror`. `HTMLEditor` is editable (writes `htmlText`); `JSXEditor` is read-only (displays `jsxText`). Editor theming is in `src/editor/` (`theme/dark.ts`, `theme/light.ts`, `editorBaseTheme.ts`, `plugins/`). The `ConfigPanel` renders the options form from a `configMap` derived from the store and writes changes back through `setStore`.
+All three editors are CodeMirror 6 instances via `solid-codemirror`. `HTMLEditor` is editable (writes `htmlText`); `JSXEditor` and `OxpeckerEditor` are read-only (display `jsxText` / `oxpeckerText`). `CopyButton` is the shared copy control (`CopyJSXButton` is the older JSX-only variant still used in the mobile actions bar). Editor theming is in `src/editor/` (`theme/dark.ts`, `theme/light.ts`, `editorBaseTheme.ts`, `plugins/`). The `ConfigPanel` renders the options form from a `configMap` derived from the store and writes changes back through `setStore`.
 
 Layout shell: `src/root.tsx` (document head, theme bootstrap script) → `src/routes/index.tsx` (the only route). Dark mode is a `dark` class on `<html>`, set by an inline script in `root.tsx` from `localStorage.theme` / `prefers-color-scheme`.
 

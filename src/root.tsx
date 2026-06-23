@@ -17,27 +17,27 @@ import "@unocss/reset/tailwind.css";
 import "virtual:uno.css";
 import "./root.css";
 
-const ghHandle = "solidjs-community";
-const ghRepoName = "html-to-solidjsx";
+const ghHandle = "GoswinR";
+const ghRepoName = "html-to-oxpecker";
 const url = `https://${ghHandle}.github.io/${ghRepoName}`;
 
 export default function Root() {
   return (
     <Html lang="en">
       <Head>
-        <Title>HTML To SolidJSX</Title>
+        <Title>HTML To Oxpecker</Title>
         <Meta charset="utf-8" />
         <Meta name="viewport" content="width=device-width, initial-scale=1" />
-        <Meta name="og:title" content="HTML To SolidJSX" />
+        <Meta name="og:title" content="HTML To Oxpecker" />
         <Meta name="og:url" content={url} />
         <Meta name="og:type" content="website" />
         <Meta
           name="description"
-          content="Convert your HTML to Solid JSX template"
+          content="Convert your HTML to F# Oxpecker.Solid markup and SolidJS JSX"
         />
         <Meta
           name="og:description"
-          content="Convert your HTML to Solid JSX template"
+          content="Convert your HTML to F# Oxpecker.Solid markup and SolidJS JSX"
         />
         <Meta name="og:image:width" content="1200" />
         <Meta name="og:image:height" content="630" />
@@ -45,13 +45,13 @@ export default function Root() {
         <Meta name="og:image:url" content={`${url}/og.png`} />
         <Meta name="og:image:secure_url" content={`${url}/og.png`} />
         <Meta name="og:image:alt" content="" />
-        <Meta name="twitter:title" content="HTML To SolidJSX" />
+        <Meta name="twitter:title" content="HTML To Oxpecker" />
         <Meta name="twitter:card" content="summary_large_image" />
         <Meta name="twitter:image" content={`${url}/og.png`} />
         <Meta name="twitter:image:alt" content="" />
         <Meta
           name="twitter:description"
-          content="Convert your HTML to Solid JSX template"
+          content="Convert your HTML to F# Oxpecker.Solid markup and SolidJS JSX"
         />
         <Link
           rel="apple-touch-icon"

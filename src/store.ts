@@ -6,7 +6,8 @@ type TStore = {
   config: TJSXConfig;
   htmlText: string;
   jsxText: string;
-  layout: "columns" | "rows" | "jsx" | "html";
+  oxpeckerText: string;
+  layout: "columns" | "rows" | "jsx" | "html" | "oxpecker";
   lineWrap: boolean;
 };
 export const defaultConfig: TJSXConfig = {
@@ -30,6 +31,7 @@ export const [store, setStore] = createStore<TStore>({
   config: { ...defaultConfig },
   htmlText: getHTMLText().trimStart(),
   jsxText: getJSXText().trimStart(),
+  oxpeckerText: getOxpeckerText().trimStart(),
   layout: "rows",
   lineWrap: true,
 });
@@ -53,6 +55,30 @@ function getHTMLText() {
     font-size: 18px;
   }
 </style>
+`;
+}
+
+function getOxpeckerText() {
+  return `
+// Solid is solid
+h1(class'="heading", style="--solid-primary: #2c4f7c; color: #000;") { "SolidJSX" }
+div(tabindex=0, id="name").bool("contenteditable", true)
+br()
+svg(width="50", height="50", viewBox="0 0 13.2 13.2") {
+  defs() {
+    linearGradient(id="a") {
+      stop(offset="0", \`\`stop-color\`\`="#446b9e")
+    }
+  }
+  circle(cx="6.6", cy="6.6", r="6.6", fill="url(#a)")
+}
+style() {
+  """
+.heading {
+    font-size: 18px;
+  }
+  """
+}
 `;
 }
 

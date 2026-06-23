@@ -24,8 +24,8 @@ const Header = () => {
             <li>
               <a
                 class="flex justify-center items-center w-45px h-45px dark:text-solid-mediumgray text-solid-gray/80 rounded-full hover:(text-black bg-#F2F2F2) dark:hover:(text-white bg-#333) transition"
-                href="https://github.com/solidjs-community/html-to-solidjsx"
-                aria-label="Github repository of html-to-solidjsx"
+                href="https://github.com/GoswinR/html-to-oxpecker"
+                aria-label="Github repository of html-to-oxpecker"
                 rel="noreferrer noopener"
               >
                 <GithubIcon />

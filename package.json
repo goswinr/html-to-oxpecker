@@ -1,14 +1,17 @@
 {
-  "name": "html-to-solidjsx",
+  "name": "html-to-oxpecker",
   "scripts": {
     "dev": "solid-start dev",
     "build": "solid-start build",
-    "start": "solid-start start"
+    "start": "solid-start start",
+    "test": "pnpm test:fsharp",
+    "test:fsharp": "node test/fsharp/run.mjs"
   },
   "type": "module",
   "devDependencies": {
     "@types/node": "^18.11.18",
     "esbuild": "^0.14.54",
+    "linkedom": "0.18.12",
     "postcss": "^8.4.21",
     "typescript": "^4.9.4",
     "vite": "^4.0.3"
@@ -17,6 +20,7 @@
     "@codemirror/lang-html": "^6.4.0",
     "@codemirror/lang-javascript": "^6.1.2",
     "@codemirror/language": "^6.3.1",
+    "@codemirror/legacy-modes": "6.5.3",
     "@codemirror/state": "^6.1.4",
     "@codemirror/view": "^6.7.1",
     "@floating-ui/dom": "^1.1.1",

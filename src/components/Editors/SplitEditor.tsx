@@ -1,37 +1,50 @@
 import { store } from "../../store";
 import HTMLEditor from "./HTMLEditor";
 import JSXEditor from "./JSXEditor";
+import OxpeckerEditor from "./OxpeckerEditor";
+
+const paneBorder = "border-#CFCFCF dark:border-#555";
 
 const SplitEditor = () => {
   return (
     <div
       id="split-editor"
-      class="flex-grow grid md:grid-cols-[1fr_1fr]  md:md:h-[100vh] dark:bg-dark"
+      class="flex-grow flex min-h-0 md:flex-row md:h-[100vh] dark:bg-dark"
       classList={{
-        "grid-cols-[1fr_1fr]": store.layout === "columns",
-        "grid-cols-[1fr]":
-          store.layout === "rows" || store.layout === "html" || store.layout === "jsx",
+        "flex-row": store.layout === "columns",
+        "flex-col": store.layout === "rows",
       }}
     >
       <div
         id="html-editor-container"
-        class="relative h-full md:border-r-2 border-#CFCFCF dark:border-#555"
+        class={`relative flex-1 min-w-0 min-h-0 md:border-r-2 ${paneBorder}`}
         classList={{
-          hidden: store.layout === "jsx",
+          hidden: store.layout === "jsx" || store.layout === "oxpecker",
           "border-r-2": store.layout === "columns",
+          "border-b-2": store.layout === "rows",
         }}
       >
         <HTMLEditor />
       </div>
       <div
         id="jsx-editor-container"
-        class="md:border-t-0 TEMP"
+        class={`relative flex-1 min-w-0 min-h-0 md:border-r-2 ${paneBorder}`}
         classList={{
-          hidden: store.layout === "html",
-          "border-t-2 border-#CFCFCF dark:border-#555": store.layout === "rows",
+          hidden: store.layout === "html" || store.layout === "oxpecker",
+          "border-r-2": store.layout === "columns",
+          "border-b-2": store.layout === "rows",
         }}
       >
         <JSXEditor />
+      </div>
+      <div
+        id="oxpecker-editor-container"
+        class="relative flex-1 min-w-0 min-h-0"
+        classList={{
+          hidden: store.layout === "html" || store.layout === "jsx",
+        }}
+      >
+        <OxpeckerEditor />
       </div>
     </div>
   );
