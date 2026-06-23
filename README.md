@@ -1,8 +1,8 @@
-<p>
-  <img width="100%" src="https://assets.solidjs.com/banner?background=tiles&project=html%20to%20oxpecker" alt="HTML to Oxpecker">
+<p align="center">
+  <img width="140" src="public/oxpecker-logo.png" alt="Oxpecker logo">
 </p>
 
-# HTML to Oxpecker
+<h1 align="center">HTML to Oxpecker</h1>
 
 This is the source code of the [HTML to Oxpecker](https://GoswinR.github.io/html-to-oxpecker) website — a browser tool that converts HTML to F# [Oxpecker.Solid](https://github.com/Lanayx/Oxpecker) markup and SolidJS JSX.
 

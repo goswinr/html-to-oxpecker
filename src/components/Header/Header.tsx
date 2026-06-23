@@ -1,7 +1,8 @@
 import GithubIcon from "../Icons/GithubIcon";
 import { panelSize } from "../SettingsPanel/SettingsPanel";
-import SolidLogo from "../SolidLogo";
 import ThemeBtn from "./ThemeBtn";
+
+const oxpeckerLogo = `${import.meta.env.BASE_URL}oxpecker-logo.png`;
 
 const Header = () => {
   return (
@@ -11,9 +12,15 @@ const Header = () => {
     >
       <div class="flex justify-between items-center gap-4 h-full relative z-1">
         <div class="flex gap-2 md:gap-3 items-center h-full">
-          <SolidLogo />
+          <img
+            src={oxpeckerLogo}
+            alt="Oxpecker logo"
+            class="h-full py-1 object-contain"
+            width="48"
+            height="48"
+          />
           <h1 class="text-14px dark:text-light font-500 md:text-18px w-min leading-1em opacity-80 font-sans">
-            <span class="whitespace-nowrap TEMP">HTML To</span> SolidJSX
+            <span class="whitespace-nowrap TEMP">HTML To</span> Oxpecker
           </h1>
         </div>
         <nav id="header-nav">
