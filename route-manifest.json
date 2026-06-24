@@ -3,16 +3,16 @@
     "type": "route",
     "script": {
       "type": "script",
-      "href": "/html-to-oxpecker/assets/index-2ae02b53.js"
+      "href": "/html-to-oxpecker/assets/index-f9f7fe53.js"
     },
     "assets": [
       {
         "type": "script",
-        "href": "/html-to-oxpecker/assets/index-2ae02b53.js"
+        "href": "/html-to-oxpecker/assets/index-f9f7fe53.js"
       },
       {
         "type": "script",
-        "href": "/html-to-oxpecker/assets/entry-client-6d5554c6.js"
+        "href": "/html-to-oxpecker/assets/entry-client-d933a8f8.js"
       },
       {
         "type": "style",
@@ -24,12 +24,12 @@
     "type": "entry",
     "script": {
       "type": "script",
-      "href": "/html-to-oxpecker/assets/entry-client-6d5554c6.js"
+      "href": "/html-to-oxpecker/assets/entry-client-d933a8f8.js"
     },
     "assets": [
       {
         "type": "script",
-        "href": "/html-to-oxpecker/assets/entry-client-6d5554c6.js"
+        "href": "/html-to-oxpecker/assets/entry-client-d933a8f8.js"
       },
       {
         "type": "style",
