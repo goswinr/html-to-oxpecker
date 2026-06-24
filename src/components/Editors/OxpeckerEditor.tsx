@@ -1,5 +1,6 @@
-import { StreamLanguage } from "@codemirror/language";
+import { StreamLanguage, StringStream } from "@codemirror/language";
 import { fSharp } from "@codemirror/legacy-modes/mode/mllike";
+import { tags } from "@lezer/highlight";
 import { Extension } from "@codemirror/state";
 import { EditorView, lineNumbers } from "@codemirror/view";
 import {
@@ -16,7 +17,21 @@ import { ConfigKey, setStore, store } from "../../store";
 import CopyButton from "../CopyButton";
 import { isDarkTheme } from "../Header/ThemeBtn";
 
-const fsharp = StreamLanguage.define(fSharp);
+// The legacy F# mode tags every identifier as a plain variable, so element
+// names and attribute names render in the same colour. Re-tag an identifier
+// that is immediately followed by "(" (i.e. an element/function call such as
+// `div(`, `circle(`, `.attr(`) as a tag name so the Oxpecker markup reads with
+// the same structure as the HTML pane.
+const fsharpParser = {
+  ...fSharp,
+  token(stream: StringStream, state: unknown) {
+    const style = fSharp.token!(stream, state);
+    if (style === "variable" && stream.peek() === "(") return "elementName";
+    return style;
+  },
+  tokenTable: { ...fSharp.tokenTable, elementName: tags.tagName },
+};
+const fsharp = StreamLanguage.define(fsharpParser);
 
 const OxpeckerEditor = () => {
   const [code, setCode] = createSignal(store.oxpeckerText.trimEnd());
