@@ -32,7 +32,7 @@ const HTMLEditor = () => {
 
   const onClear = () => {
     setStore("htmlText", "");
-    editorView().focus();
+    editorView()?.focus();
   };
 
   const extensions = (): Extension => {
@@ -53,9 +53,7 @@ const HTMLEditor = () => {
 
   onMount(() => {
     setTimeout(() => {
-      const { scrollDOM } = editorView();
-
-      scrollDOM.scrollTo({ top: 0 });
+      editorView()?.scrollDOM.scrollTo({ top: 0 });
     });
   });
 

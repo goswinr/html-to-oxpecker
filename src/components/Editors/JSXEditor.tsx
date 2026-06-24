@@ -125,9 +125,7 @@ const JSXEditor = () => {
     updateEditorText();
 
     setTimeout(() => {
-      const { scrollDOM } = editorView();
-
-      scrollDOM.scrollTo({ top: 0 });
+      editorView()?.scrollDOM.scrollTo({ top: 0 });
     });
   });
 

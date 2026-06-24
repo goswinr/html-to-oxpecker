@@ -1,4 +1,4 @@
-import { presetWind, theme } from "@unocss/preset-wind";
+import { presetWind3, theme } from "@unocss/preset-wind3";
 import {
   transformerDirectives,
   defineConfig,
@@ -57,6 +57,6 @@ export default defineConfig({
       sans: "Gordita, " + theme.fontFamily!.sans,
     },
   },
-  presets: [presetWind()],
+  presets: [presetWind3()],
   transformers: [transformerDirectives(), transformerVariantGroup()],
 });
