@@ -4579,7 +4579,7 @@ packages:
       sirv: 2.0.4
       solid-js: 1.9.13
       terser: 5.48.0
-      undici: 7.28.0
+      undici: 5.29.0
       vite: 8.1.0(@types/node@26.0.0)(esbuild@0.28.1)
       vite-plugin-inspect: 0.7.42(rollup@3.30.0)(vite@8.1.0)
       vite-plugin-solid: 2.11.12(solid-js@1.9.13)(vite@8.1.0)
@@ -4730,9 +4730,9 @@ packages:
   /undici-types@8.3.0:
     resolution: {integrity: sha512-j375ScV60dom+YkPFIfTLcOiPxkN/buHz5GobjLhixFuANaNs3C9l4GmrWqejgXWJ7BbJcFYpTEUkS1Ge8bpZQ==}
 
-  /undici@7.28.0:
-    resolution: {integrity: sha512-cRZYrTDwWznlnRiPjggAGxZXanty6M8RV1ff8Wm4LWXBp7/IG8v5DnOm74DtUBp9OONpK75YlPnIjQqX0dBDtA==}
-    engines: {node: '>=20.18.1'}
+  /undici@5.29.0:
+    resolution: {integrity: sha512-raqeBD6NQK4SkWhQzeYKd1KmIG6dllBOTt55Rmkt4HtI9mwdWtJljnrXjAFUBLTSN67HWrOIZ3EPF4kjUw80Bg==}
+    engines: {node: '>=14.0'}
     dev: false
 
   /unicode-canonical-property-names-ecmascript@2.0.1:

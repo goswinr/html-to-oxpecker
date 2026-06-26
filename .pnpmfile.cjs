@@ -5,7 +5,7 @@ module.exports = {
         pkg.dependencies = {
           ...pkg.dependencies,
           esbuild: "0.28.1",
-          undici: "7.28.0",
+          undici: "5.29.0",
           "wait-on": "9.0.10",
         };
       }

@@ -20,6 +20,7 @@ import "./root.css";
 const ghHandle = "GoswinR";
 const ghRepoName = "html-to-oxpecker";
 const url = `https://${ghHandle}.github.io/${ghRepoName}`;
+const assetBase = import.meta.env.BASE_URL;
 
 export default function Root() {
   return (
@@ -60,23 +61,23 @@ export default function Root() {
         <Link
           rel="apple-touch-icon"
           sizes="180x180"
-          href={`/${ghRepoName}/favicons/apple-touch-icon.png`}
+          href={`${assetBase}favicons/apple-touch-icon.png`}
         />
         <Link
           rel="icon"
           type="image/png"
           sizes="32x32"
-          href={`/${ghRepoName}/favicons/favicon-32x32.png`}
+          href={`${assetBase}favicons/favicon-32x32.png`}
         />
         <Link
           rel="icon"
           type="image/png"
           sizes="16x16"
-          href={`/${ghRepoName}/favicons/favicon-16x16.png`}
+          href={`${assetBase}favicons/favicon-16x16.png`}
         />
         <Meta
           name="msapplication-TileImage"
-          content={`/${ghRepoName}/favicons/ms-icon-144x144.png`}
+          content={`${assetBase}favicons/ms-icon-144x144.png`}
         />
         <Meta name="msapplication-TileColor" content="#2c4f7c" />
         <Meta name="theme-color" content="#2c4f7c" />
@@ -85,7 +86,7 @@ export default function Root() {
         <link
           rel="icon"
           type="image/png"
-          href={`/${ghRepoName}/favicons/favicon-32x32.png`}
+          href={`${assetBase}favicons/favicon-32x32.png`}
         />
         <script>{`
         if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {

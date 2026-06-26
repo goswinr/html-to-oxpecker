@@ -29,8 +29,8 @@ function legacySolidStartManifests(): Plugin {
   };
 }
 
-export default defineConfig({
-  base: "/html-to-oxpecker/",
+export default defineConfig(({ command }) => ({
+  base: command === "build" ? "/html-to-oxpecker/" : "/",
   build: {
     manifest: "manifest.json",
     ssrManifest: "ssr-manifest.json",
@@ -46,4 +46,4 @@ export default defineConfig({
     legacySolidStartManifests(),
     UnoCss(),
   ],
-});
+}));
